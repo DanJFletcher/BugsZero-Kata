@@ -1,7 +1,7 @@
 const {Game} = require('../src/game');
 const {gameRunner} = require('../src/game-runner');
 
-const expect = require('chai').expect;
+const {expect, assert} = require('chai');
 const approvals = require('approvals');
 approvals.mocha();
 const _ = require('lodash');
@@ -24,6 +24,14 @@ describe("The game", function () {
 
         this.verifyAsJSON(loggedLines)
 
+    });
+
+    xit("should enforce at least 2 players are added", () => {
+       const game = new Game();
+       
+       game.add("Ash");
+
+       assert.throws(() => game.roll(1), 'Not enough players in game. Make sure there are at least 2.');
     });
 
 });

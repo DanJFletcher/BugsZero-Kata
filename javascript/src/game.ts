@@ -1,5 +1,6 @@
 export class Game {
 
+    // Maybe questions should extend a base or interface?
     rockQuestions: any[];
     isGettingOutOfPenaltyBox: boolean;
     currentPlayer: number;
@@ -12,19 +13,24 @@ export class Game {
     players: any[];
 
     constructor() {
+        // maybe players should be injected here
+        // have a player object to encapsulate shared data
         this.players = new Array();
-        this.places = new Array(6);
+        this.places = new Array(6); // unclear what this is
         this.purses = new Array(6);
         this.inPenaltyBox = new Array(6);
 
+        // I don't like this
         this.popQuestions = new Array();
         this.scienceQuestions = new Array();
         this.sportsQuestions = new Array();
         this.rockQuestions = new Array();
 
+        // current player could be an object
         this.currentPlayer = 0;
-        this.isGettingOutOfPenaltyBox = false;
+        this.isGettingOutOfPenaltyBox = false; // seems weird
 
+        // maybe question count comes from options
         for (let i = 0; i < 50; i++) {
             this.popQuestions.push("Pop Question " + i);
             this.scienceQuestions.push("Science Question " + i);
@@ -35,6 +41,7 @@ export class Game {
     }
 
     add(playerName) {
+        // instead of taking a string take object
         this.players.push(playerName);
         this.places[this.howManyPlayers() - 1] = 0;
         this.purses[this.howManyPlayers() - 1] = 0;
@@ -102,6 +109,9 @@ export class Game {
     };
 
     roll(roll) {
+        if (this.players.length < 2) {
+            throw new Error('Not enough players in game. Make sure there are at least 2.')
+        }
         console.log(this.players[this.currentPlayer] + " is the current player");
         console.log("They have rolled a " + roll);
 
